@@ -786,19 +786,12 @@ class App {
  * @return void
  */
 	protected static function _map($file, $name, $plugin = null) {
-		$key = $name;
-		if ($plugin) {
-			$key = 'plugin.' . $name;
-		}
-		if ($plugin && empty(static::$_map[$name])) {
-			static::$_map[$key] = $file;
-		}
-		if (!$plugin && empty(static::$_map['plugin.' . $name])) {
-			static::$_map[$key] = $file;
-		}
-		if (!static::$bootstrapping) {
-			static::$_cacheChange = true;
-		}
+	    $key = $plugin ? 'plugin.' . $plugin . '.' . $name : $name;
+	    static::$_map[$key] = $file;
+	
+	    if (!static::$bootstrapping) {
+	        static::$_cacheChange = true;
+	    }
 	}
 
 /**
@@ -809,11 +802,8 @@ class App {
  * @return mixed file path if found, false otherwise
  */
 	protected static function _mapped($name, $plugin = null) {
-		$key = $name;
-		if ($plugin) {
-			$key = 'plugin.' . $name;
-		}
-		return isset(static::$_map[$key]) ? static::$_map[$key] : false;
+	    $key = $plugin ? 'plugin.' . $plugin . '.' . $name : $name;
+	    return isset(static::$_map[$key]) ? static::$_map[$key] : false;
 	}
 
 /**
