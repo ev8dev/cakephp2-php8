@@ -2655,7 +2655,8 @@ class DboSource extends DataSource {
 			$quote,
 			ConnectionManager::getSourceName($this),
 			$Model->schemaName,
-			$Model->table
+			$Model->table,
+			$Model->tablePrefix
 		);
 		$cacheKey = $this->cacheMethodHasher(serialize($cacheKey));
 		if ($return = $this->cacheMethod(__FUNCTION__, $cacheKey)) {
